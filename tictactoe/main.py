@@ -3,7 +3,16 @@ import sys
 import bots
 import visualizers
 import utils
+from copy import deepcopy
 from utils import consts
+
+try:
+    from tqdm import tqdm
+except:
+    print("no tqdm")
+    class tqdm(list):
+        pass
+
 
 class TicTacToe:
     def __init__(self, p1, p2):
@@ -22,7 +31,7 @@ class TicTacToe:
         self.game = GameBoard.NewBoard()
         self.game.turn_on_screen()
 
-        for game_index in range(num_games):
+        for game_index in tqdm(range(num_games)):
             consts.LOGGER.debug("New game beginning")
 
 
@@ -34,11 +43,13 @@ class TicTacToe:
                     first = self.p2
                     other = self.p1
 
+            import pdb
+            #pdb.set_trace()
+
             #### this the actual game loop
             while self.game.no_winner():
                 first.move(self.game)
                 first, other = other, first
-
             #### game has ended
             if not self.game.draw():
                 consts.LOGGER.debug("{} has won".format(self.game.winner))
@@ -51,7 +62,10 @@ class TicTacToe:
             #### start new game
             self.game = GameBoard.NewBoard(screen=self.game.screen)
 
-            if game_index % 100 == 0 and consts.USE_PYGAME:
+            if game_index % 10 == 0 and consts.USE_PYGAME:
+                print(self.pretty_stats(stats))
+
+            if game_index % 100 == 0 and not consts.USE_PYGAME:
                 print(self.pretty_stats(stats))
 
         #### done running simulations
@@ -99,9 +113,12 @@ class GameBoard:
 
     def update(self, move, player):
         i, j = move
-        self.spaces[i][j] = player.symbol
-        if self.screen:
-            self.screen.draw(move, player)
+        if isinstance(player, str):
+            self.spaces[i][j] = player
+        else:
+            self.spaces[i][j] = player.symbol
+            if self.screen:
+                self.screen.draw(move, player)
 
 
 
@@ -159,10 +176,12 @@ class GameBoard:
 
 
 def test():
-    p1 = bots.RandomBot(consts.X)
-    p2 = bots.RandomBot(consts.O)
+    p1 = bots.MiniMaxBot(consts.X)
+    #p1 = bots.RandomBot(consts.X)
+    p2 = bots.MiniMaxBot(consts.O)
+    #p2 = bots.RandomBot(consts.O)
     game = TicTacToe(p1,p2)
-    game.run(100000)
+    game.run(10000)
 
 if __name__ == "__main__":
     #utils.debug()

@@ -31,7 +31,7 @@ class consts:
     USE_PYGAME = False
     WINDOWWIDTH = 500
     WINDOWHEIGHT = 300
-    FPS = 5
+    FPS = 40
 
     """
     GAME SETTINGS

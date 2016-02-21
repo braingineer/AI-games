@@ -88,6 +88,16 @@ class GenericWormBot:
         else:
             return False
 
+class LearningBot(GenericWormBot):
+    def think(self, game, bots):
+        """
+        arguments:
+            game:  the game state.
+                   gives access to food location
+            bots: other bots.
+                  gives access to where other bots are located
+        """
+
 class RandomWormBot(GenericWormBot):
     def think(self, game, bots):
         x,y = random.choice(list(consts.MOVES.values()))

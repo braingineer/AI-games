@@ -178,8 +178,8 @@ class GameBoard:
 def test():
     p1 = bots.MiniMaxBot(consts.X)
     #p1 = bots.RandomBot(consts.X)
-    p2 = bots.MiniMaxBot(consts.O)
-    #p2 = bots.RandomBot(consts.O)
+    #p2 = bots.MiniMaxBot(consts.O)
+    p2 = bots.RandomBot(consts.O)
     game = TicTacToe(p1,p2)
     game.run(10000)
 

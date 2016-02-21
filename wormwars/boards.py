@@ -56,9 +56,7 @@ class GameBoard:
 
     def _food_helper(self):
         x = random.randint(0, self.right_edge-1)
-        #x -= x % consts.CELLSIZE
         y = random.randint(0, self.bottom_edge-1)
-        #y -= y % consts.CELLSIZE
         return x,y
 
     def new_food(self):

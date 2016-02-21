@@ -1,9 +1,6 @@
 from bots import RandomWormBot, DirectBot, CarefulBot
 import consts
 
-
-
-
 class WormWars:
     def __init__(self, bots, game_type="original"):
         self.game_class = consts.GAME_BOARDS[game_type]

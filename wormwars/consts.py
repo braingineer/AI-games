@@ -35,15 +35,15 @@ MOVE_LOOKUP = {v:k for k,v in MOVES.items()}
 GAME_BOARDS = {"original": GameBoard,
                "tron": TronGameBoard,
                "infinite": InfiniteGameBoard}
-
+PAUSE_AFTER_DEATH = True
 
 """
 PYGAME SETTINGS
 ===============
 """
 
-USE_PYGAME = False
-STATS_ONLY = True
+USE_PYGAME = True
+STATS_ONLY = False
 FPS = 300
 WINDOWWIDTH = 1500
 WINDOWHEIGHT = 1000

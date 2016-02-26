@@ -2,6 +2,7 @@ from __future__ import print_function
 import random
 import consts
 import itertools
+import heapq
 
 class GenericWormBot:
     def __init__(self, bot_id, initial_position=(0,0)):
@@ -59,7 +60,7 @@ class GenericWormBot:
         self.FAILED = True
         self.FAILURE_REASON = reason
 
-  def bad_move(self, new_coords):
+    def bad_move(self, new_coords):
         if len(self.body_parts) > 1:
             for part in self.body_parts[1:]:
                 if part['x'] == new_coords[0] and part['y'] == new_coords[1]:
@@ -132,9 +133,12 @@ class AwesomeBot(GenericWormBot):
                 came_from[move] = (move_dist, next_move, move_value)
             frontier.push_many(moves)
 
+        self.last_history = []
         justincase = 0
+        self.last_history.append(best_move)
         while came_from[best_move][0] > 0 and justincase < 10**4:
             best_move = came_from[best_move]
+            self.last_history.append(best_move)
             justincase += 1
 
         move_dist, next_move, move_value = best_move

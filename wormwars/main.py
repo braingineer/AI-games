@@ -1,5 +1,6 @@
-from bots import Awesomebot
+from bots import AwesomeBot
 import consts
+
 
 class WormWars:
     def __init__(self, bots, game_type="original"):
@@ -52,6 +53,11 @@ class WormWars:
                 self.game.update(bot)
             if consts.USE_PYGAME and not consts.STATS_ONLY:
                 self.game.tick(self.bots, self.stats)
+        if consts.PAUSE_AFTER_DEATH:
+            for bot in self.bots:
+                for m in bot.last_history:
+                    print(m)
+            input("<enter to continue>")
         if consts.USE_PYGAME and consts.STATS_ONLY:
             self.game.tick(self.bots, self.stats)
         self.track_stats()
@@ -93,8 +99,25 @@ def test2():
             raise e
         if i%10==0: print(war.stats)
 
+def test3():
+    bots = [AwesomeBot]
+    war = WormWars(bots)
+    for i in range(2000):
+        try:
+            war.run()
+            war.initialize()
+        except Exception as e:
+            print("made it to {}".format(i))
+            print("Turn number {}".format(war.game.turn_number))
+            print("Worm length: {} and {}".format(len(war.bots[0].body_parts), len(war.bots[1].body_parts) ))
+
+            raise e
+
+        if i%10==0: print(war.stats)
+
+
 if __name__ == "__main__":
     try:
-        test2()
+        test3()
     except KeyboardInterrupt as e:
         print("Gracefully exiting")

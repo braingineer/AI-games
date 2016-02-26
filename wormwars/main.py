@@ -1,4 +1,4 @@
-from bots import RandomWormBot, DirectBot, CarefulBot
+from bots import Awesomebot
 import consts
 
 class WormWars:

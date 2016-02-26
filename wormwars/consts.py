@@ -45,8 +45,8 @@ PYGAME SETTINGS
 USE_PYGAME = True
 STATS_ONLY = False
 FPS = 300
-WINDOWWIDTH = 1500
-WINDOWHEIGHT = 1000
+WINDOWWIDTH =  300
+WINDOWHEIGHT = 300
 CELLSIZE = 10
 assert WINDOWWIDTH % CELLSIZE == 0, "Window width must be a multiple of cell size."
 assert WINDOWHEIGHT % CELLSIZE == 0, "Window height must be a multiple of cell size."

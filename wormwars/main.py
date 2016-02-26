@@ -109,7 +109,7 @@ def test3():
         except Exception as e:
             print("made it to {}".format(i))
             print("Turn number {}".format(war.game.turn_number))
-            print("Worm length: {} and {}".format(len(war.bots[0].body_parts), len(war.bots[1].body_parts) ))
+            print("Worm length: {}".format(len(war.bots[0].body_parts)))
 
             raise e
 

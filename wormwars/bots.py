@@ -60,7 +60,12 @@ class GenericWormBot:
         self.FAILED = True
         self.FAILURE_REASON = reason
 
-    def bad_move(self, new_coords):
+    def bad_move(self, new_coords, game=None):
+        if game:
+            if new_coords[0] < 0 or new_coords[1] < 0:
+                return True
+            if new_coords[0] > game.right_edge or new_coords[1] > game.bottom_edge:
+                return True
         if len(self.body_parts) > 1:
             for part in self.body_parts[1:]:
                 if part['x'] == new_coords[0] and part['y'] == new_coords[1]:
@@ -71,23 +76,19 @@ class GenericWormBot:
 class PriorityQueue:
     def __init__(self):
         self.items = []
-        self.graveyard = set()
 
     def push(self, item):
         heapq.heappush(self.items, item)
 
     def push_many(self, items):
         for item in items:
-            if item[1] not in self.graveyard:
-                self.push(item)
-                self.graveyard.add(item[1])
+            self.push(item)
 
     def pop(self):
         return heapq.heappop(self.items)
 
     def not_empty(self):
         return len(self.items) > 0
-
 
 class AwesomeBot(GenericWormBot):
     def calc_dist(self, coord1, coord2):
@@ -104,12 +105,12 @@ class AwesomeBot(GenericWormBot):
         return new_coord
 
 
-    def apply_moves(self, xy, foodxy):
+    def apply_moves(self, xy, foodxy, game):
         all_moves = []
         for move_name, move_value in consts.MOVES.items():
             new_coord = self.apply_move(move_value, xy)
             move_dist = self.calc_dist(new_coord, foodxy)
-            if not self.bad_move(new_coord):
+            if not self.bad_move(new_coord, game):
                 all_moves.append((move_dist, new_coord, move_value))
         return all_moves
 
@@ -118,20 +119,35 @@ class AwesomeBot(GenericWormBot):
         foodxy = (game.food['x'], game.food['y'])
         head = self.body_parts[consts.HEAD]
         curxy = (head['x'], head['y'])
+        starting_point = (0,curxy, None)
 
         frontier = PriorityQueue()
-        frontier.push((0,curxy, None))
+        frontier.push(starting_point)
         came_from = dict()
+        graveyard = set()
+        best_move = None
 
         while frontier.not_empty():
             move_dist, next_move, move_value = frontier.pop()
             if next_move == foodxy:
                 best_move = (move_dist, next_move, move_value)
                 break
-            moves = self.apply_moves(next_move, foodxy)
+            moves = self.apply_moves(next_move, foodxy, game)
             for move in moves:
-                came_from[move] = (move_dist, next_move, move_value)
-            frontier.push_many(moves)
+                move_coord = move[1]
+                if move_coord not in graveyard:
+                    came_from[move] = (move_dist, next_move, move_value)
+                    frontier.push(move)
+                    graveyard.add(move_coord)
+
+        if best_move is None:
+            print("found nothing.. food unreachable.. but can we just not die?")
+            for move, origin in came_from.items():
+                if origin == starting_point:
+                    move_value = move[2]
+                    return move_value
+            print("I think we're about to die")
+            return list(consts.MOVES.values())[0]
 
         self.last_history = []
         justincase = 0

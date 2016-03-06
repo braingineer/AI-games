@@ -2,11 +2,8 @@ from __future__ import print_function
 import random
 import consts
 import itertools
-<<<<<<< Updated upstream
-=======
 import heapq
 from collections import defaultdict
->>>>>>> Stashed changes
 
 class GenericWormBot:
     def __init__(self, bot_id, initial_position=(0,0)):
@@ -26,31 +23,6 @@ class GenericWormBot:
         return cls(bot_id, starting_position)
 
     def act(self, game, bots):
-<<<<<<< Updated upstream
-        move_x, move_y = self.think(game, bots)
-        #move_x *= consts.CELLSIZE
-        #move_y *= consts.CELLSIZE
-
-        new_head_x = self.body_parts[consts.HEAD]['x'] + move_x
-        new_head_y = self.body_parts[consts.HEAD]['y'] + move_y
-
-        """
-        try:
-            assert new_head_x % consts.CELLSIZE == 0
-            assert new_head_y % consts.CELLSIZE == 0
-        except AssertionError as e:
-            x = self.body_parts[consts.HEAD]['x']
-            y = self.body_parts[consts.HEAD]['y']
-            print("x: ", x)
-            print("x modulo cell size: ", x % consts.CELLSIZE)
-            print("y: ", y)
-            print("y modulo cell size: ", y % consts.CELLSIZE)
-            print("move_x: ", move_x)
-            print("move_y: ", move_y)
-            raise e
-        """
-
-=======
         t = self.think(game, bots)
         #print("{1}: is moving {0[0]} x and {0[1]} y".format(t, self.bot_id))
         move_x, move_y = t
@@ -58,7 +30,7 @@ class GenericWormBot:
         new_head_y = self.body_parts[consts.HEAD]['y'] + move_y
         #print("{1}: is moving {0[0]} x and {0[1]} y".format(t, self.bot_id), end="; ")
         #print("New X: {0}; New Y: {1}".format(new_head_x, new_head_y))
->>>>>>> Stashed changes
+
         self.body_parts.insert(consts.HEAD, {'x':new_head_x, 'y':new_head_y})
 
     def delete_tail(self):
@@ -96,15 +68,6 @@ class GenericWormBot:
         self.FAILED = True
         self.FAILURE_REASON = reason
 
-<<<<<<< Updated upstream
-    def bad_move(self, x,y):
-        if len(self.body_parts) > 1:
-            neck_x, neck_y = self.body_parts[1]['x'], self.body_parts[1]['y']
-            new_head_x, new_head_y = self.head['x']+x, self.head['y']+y
-            return new_head_x == neck_x and new_head_y == neck_y
-        else:
-            return False
-=======
     def bad_move(self, new_coords, game=None, bots=None):
         if game:
             if new_coords[0] < 0 or new_coords[1] < 0:
@@ -119,7 +82,6 @@ class GenericWormBot:
             #print("HERE")
             if self.other_collision(bots, {'x':new_coords[0], 'y':new_coords[1]}):
                 return True
->>>>>>> Stashed changes
 
 class LearningBot(GenericWormBot):
     def think(self, game, bots):
@@ -161,7 +123,6 @@ class DirectBot(GenericWormBot):
         x,y = head_pos
         self.line_dist()
 
-<<<<<<< Updated upstream
     def think(self, game, bots):
         food = (game.food['x'], game.food['y'])
         moves = list(consts.MOVES.values())
@@ -222,7 +183,7 @@ class CarefulBot(DirectBot):
 
         head_pos, min_move = min(move_pairs, key=min_key)
         return min_move
-=======
+
 class PriorityQueue:
     def __init__(self, make_max=False):
         self.make_max = make_max
@@ -409,4 +370,3 @@ def get_best(bot, best_move, came_from):
         best_move = came_from[best_move]
         justincase += 1
         bot.last_history.append(best_move[-1])
->>>>>>> Stashed changes

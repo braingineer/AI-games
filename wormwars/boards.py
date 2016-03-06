@@ -4,8 +4,8 @@ import consts
 
 class GameBoard:
     def __init__(self, num_bots):
-        self.right_edge = consts.WINDOWWIDTH // consts.CELLSIZE
-        self.bottom_edge = consts.WINDOWHEIGHT // consts.CELLSIZE
+        self.right_edge = consts.WINDOWWIDTH // consts.CELLSIZE - 1
+        self.bottom_edge = consts.WINDOWHEIGHT // consts.CELLSIZE -1
         self.no_food = set()
         self.food = self.new_food()
         self.turn_number = 0
@@ -70,9 +70,10 @@ class GameBoard:
 
 class TronGameBoard(GameBoard):
     def update(self, bot):
-
         head = (bot.head['x'], bot.head['y'])
         self.no_food.add(head)
+        if bot._single_collision(self.food):
+            self.food = self.new_food()
 
 
 class InfiniteGameBoard(GameBoard):

@@ -42,12 +42,21 @@ PYGAME SETTINGS
 ===============
 """
 
+<<<<<<< Updated upstream
 USE_PYGAME = False
 STATS_ONLY = True
 FPS = 300
 WINDOWWIDTH = 1500
 WINDOWHEIGHT = 1000
 CELLSIZE = 10
+=======
+USE_PYGAME = True
+STATS_ONLY = False
+FPS = 100
+WINDOWWIDTH =  300
+WINDOWHEIGHT = 300
+CELLSIZE = 20
+>>>>>>> Stashed changes
 assert WINDOWWIDTH % CELLSIZE == 0, "Window width must be a multiple of cell size."
 assert WINDOWHEIGHT % CELLSIZE == 0, "Window height must be a multiple of cell size."
 CELLWIDTH = int(WINDOWWIDTH / CELLSIZE)

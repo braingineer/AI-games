@@ -55,6 +55,18 @@ class WormWars:
                 self.game.update(bot)
             if consts.USE_PYGAME and not consts.STATS_ONLY:
                 self.game.tick(self.bots, self.stats)
+<<<<<<< Updated upstream
+=======
+        if consts.PAUSE_AFTER_DEATH:
+            for bot in self.bots:
+                print("Dead bot: {}".format(bot.bot_id))
+                print("Body Parts:")
+                for part in bot.body_parts:
+                    print("\t{}".format(part))
+            #    for m in bot.last_history:
+            #        print(m)
+            input("<enter to continue>")
+>>>>>>> Stashed changes
         if consts.USE_PYGAME and consts.STATS_ONLY:
             self.game.tick(self.bots, self.stats)
         self.track_stats()
@@ -96,6 +108,26 @@ def test2():
             raise e
         if i%10==0: print(war.stats)
 
+<<<<<<< Updated upstream
+=======
+def test3():
+    bots = [AwesomeBot, AwesomeBot]
+    war = WormWars(bots)
+    for i in range(2000):
+        try:
+            war.run()
+            war.initialize()
+        except Exception as e:
+            print("made it to {}".format(i))
+            print("Turn number {}".format(war.game.turn_number))
+            print("Worm length: {}".format(len(war.bots[0].body_parts)))
+
+            raise e
+
+        if i%10==0: print(war.stats)
+
+
+>>>>>>> Stashed changes
 if __name__ == "__main__":
     try:
         test2()

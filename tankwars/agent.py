@@ -5,7 +5,7 @@ from constants import *
 from sound import *
 from ammo import *
 
-class Player():
+class Player(object):
     """The tank controlled by players"""
     def __init__(self, controller, color, k_right, k_backward, k_left, k_forward, k_weapon1, k_weapon2, x, y, rotation = 0):
         self.controller = controller

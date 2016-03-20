@@ -32,31 +32,33 @@ class World():
 
         if self.map_type == "grass":
             self.ground_sprite = pygame.image.load("images/grass.png")
-            for i in range(random.randint(1, 5)):
-                self.objects.append(Water(self, self.world_objs_surface))
+            if not FASTRUN:
+                for i in range(random.randint(1, 5)):
+                    self.objects.append(Water(self, self.world_objs_surface))
 
-            for i in range(random.randint(2, 10)):
-                self.objects.append(Bush(self, self.world_objs_surface))
+                for i in range(random.randint(2, 10)):
+                    self.objects.append(Bush(self, self.world_objs_surface))
 
-            for i in range(random.randint(3, 15)):
-                self.objects.append(Stone(self, self.world_objs_surface))
+                for i in range(random.randint(3, 15)):
+                    self.objects.append(Stone(self, self.world_objs_surface))
 
         elif self.map_type == "sand":
             self.ground_sprite = pygame.image.load("images/sand.png")
-            for i in range(random.randint(1, 3)):
-                self.objects.append(Water(self, self.world_objs_surface))
+            if not FASTRUN:
+                for i in range(random.randint(1, 3)):
+                    self.objects.append(Water(self, self.world_objs_surface))
 
-            for i in range(random.randint(1, 2)):
-                self.objects.append(Bush(self, self.world_objs_surface))
+                for i in range(random.randint(1, 2)):
+                    self.objects.append(Bush(self, self.world_objs_surface))
 
-            for i in range(random.randint(1, 10)):
-                self.objects.append(DeadBush(self, self.world_objs_surface))
+                for i in range(random.randint(1, 10)):
+                    self.objects.append(DeadBush(self, self.world_objs_surface))
 
-            for i in range(random.randint(3, 10)):
-                self.objects.append(Stone(self, self.world_objs_surface))
+                for i in range(random.randint(3, 10)):
+                    self.objects.append(Stone(self, self.world_objs_surface))
 
-            for i in range(random.randint(3, 12)):
-                self.objects.append(DesertStone(self, self.world_objs_surface))
+                for i in range(random.randint(3, 12)):
+                    self.objects.append(DesertStone(self, self.world_objs_surface))
 
         self.ground_sprite_width = self.ground_sprite.get_width()
         self.ground_sprite_height = self.ground_sprite.get_height()

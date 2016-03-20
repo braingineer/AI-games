@@ -6,6 +6,7 @@ from pygame.locals import *
 from constants import *   # constants are CAPITALIZED
 import os
 from agent import Player
+from ai import Robot
 import map
 from menu import MainMenu, PreGameMenu, BetweenGameMenu, AfterGameMenu
 from sound import *
@@ -55,12 +56,12 @@ class Controller():
         self.register_eventhandler(pygame.QUIT, self.quit)
         self.register_key(pygame.K_ESCAPE, self.quit, singlepress = True)
 
-        self.menu = MainMenu(self)
+        #self.menu = MainMenu(self)
         self.pregame_menu = False
         self.betweengame_menu = False
         self.aftergame_menu = False
-        Sound.sounds_init()
-        Sound.Sounds["menumusic"].play()
+        #Sound.sounds_init()
+        #Sound.Sounds["menumusic"].play()
 
         self.displaytime = False
         self.ammo = []
@@ -258,7 +259,7 @@ class Controller():
 
     def start_game(self, map_type):
         self.agents = [Player(self, 'green', pygame.K_d, pygame.K_s, pygame.K_a, pygame.K_w, pygame.K_f, pygame.K_g, 100, 100, 180),
-                       Player(self, 'purple', pygame.K_RIGHT, pygame.K_DOWN, pygame.K_LEFT, pygame.K_UP, pygame.K_k, pygame.K_l, 900, 600)]
+                       Robot(self, 'purple', pygame.K_RIGHT, pygame.K_DOWN, pygame.K_LEFT, pygame.K_UP, pygame.K_k, pygame.K_l, 900, 600)]
         self.map = map.World(self, map_type)
         self.map.generate()
         self.stats = Stats(*self.agents)

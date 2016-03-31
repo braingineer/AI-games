@@ -32,7 +32,7 @@ class World():
 
         if self.map_type == "grass":
             self.ground_sprite = pygame.image.load("images/grass.png")
-            if not FASTRUN:
+            if DRAW_OBSTACLES:
                 for i in range(random.randint(1, 5)):
                     self.objects.append(Water(self, self.world_objs_surface))
 
@@ -44,7 +44,7 @@ class World():
 
         elif self.map_type == "sand":
             self.ground_sprite = pygame.image.load("images/sand.png")
-            if not FASTRUN:
+            if DRAW_OBSTACLES:
                 for i in range(random.randint(1, 3)):
                     self.objects.append(Water(self, self.world_objs_surface))
 

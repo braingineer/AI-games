@@ -5,7 +5,7 @@ from constants import *
 from sound import *
 from ammo import *
 
-class Player(object):
+class Player():
     """The tank controlled by players"""
     def __init__(self, controller, color, k_right, k_backward, k_left, k_forward, k_weapon1, k_weapon2, x, y, rotation = 0):
         self.controller = controller
@@ -103,7 +103,7 @@ class Player(object):
 
     def move(self):
         """Updates posisition of player. Use different rules for movement when player is colliding"""
-
+        self.rotation %= 360
         if self.direction == "Forward": #If the player is moving forward, subtract from x, add to y
             self.x -= math.cos(math.radians(self.rotation)) * self.speed
             self.y += math.sin(math.radians(self.rotation)) * self.speed

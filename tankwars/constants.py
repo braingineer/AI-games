@@ -32,6 +32,29 @@ MAP_BORDER_PUSHBACK = 0.05
 DEAD_BUSH_SIZE = 80
 STONE_MAX_SIZE = 180
 DESERT_STONE_MAX_SIZE = 90
+DRAW_OBSTACLES = False
 
 
-FASTRUN=True
+STEPSIZE = 3  
+
+""" LOGGING STUFF """
+import logging
+LOGLEVEL = logging.INFO
+
+def duallog(loggername, shell_level="info", file_loc=".", disable=False):
+    levels = {"debug": logging.DEBUG, "warning":logging.WARNING,
+              "info": logging.INFO, "error":logging.ERROR,
+              "critical":logging.CRITICAL}
+    logger = logging.getLogger(loggername)
+    logger.setLevel(logging.DEBUG)
+    if not logger.handlers and not disable:
+        fh = logging.FileHandler("{}/{}.debug.log".format(file_loc, loggername))
+        fh.setLevel(logging.DEBUG)
+        sh = logging.StreamHandler()
+        sh.setLevel(levels[shell_level])
+        logger.addHandler(fh)
+        logger.addHandler(sh)
+    return logger
+
+def brain_log():
+    return duallog("brain")

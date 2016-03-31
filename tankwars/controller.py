@@ -258,8 +258,11 @@ class Controller():
         sys.exit()
 
     def start_game(self, map_type):
-        self.agents = [Player(self, 'green', pygame.K_d, pygame.K_s, pygame.K_a, pygame.K_w, pygame.K_f, pygame.K_g, 100, 100, 180),
-                       Robot(self, 'purple', pygame.K_RIGHT, pygame.K_DOWN, pygame.K_LEFT, pygame.K_UP, pygame.K_k, pygame.K_l, 900, 600)]
+        self.agents = [Robot(self, 'green', pygame.K_d, pygame.K_s, pygame.K_a, 
+                             pygame.K_w, pygame.K_f, pygame.K_g, 100, 100, 180, mode="attack"),
+                       Robot(self, 'purple', pygame.K_RIGHT, pygame.K_DOWN, pygame.K_LEFT, 
+                             pygame.K_UP, pygame.K_k, pygame.K_l, 900, 600, mode="run")]
+                       #Robot(self, 'purple', pygame.K_RIGHT, pygame.K_DOWN, pygame.K_LEFT, pygame.K_UP, pygame.K_k, pygame.K_l, 600, 200)]
         self.map = map.World(self, map_type)
         self.map.generate()
         self.stats = Stats(*self.agents)

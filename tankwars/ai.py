@@ -1,10 +1,13 @@
 from agent import *
-import math
 from brain import Brain
+import math
+import time
+
 
 class Robot(Player):
     def __init__(self, controller, color, k_right, k_backward, k_left,
-                       k_forward, k_weapon1, k_weapon2, x, y, rotation = 0):
+                       k_forward, k_weapon1, k_weapon2, x, y, rotation = 0,
+                       mode="attack"):
         self.controller = controller
         self.screen = self.controller.screen
         self.name = "Agent"
@@ -23,6 +26,10 @@ class Robot(Player):
         self.solid = 100
         self.current_collisions = []
         self.dead = False
+        self.iter = 0
+        self.behaviors = []
+        self.logger = brain_log()
+        self.mode = mode
 
         """Gives the player static ammo object, these objects are copied in their fire() function.
         These variables can be seen as weapons, so fiddle with these variables when adding/changing it"""
@@ -45,15 +52,40 @@ class Robot(Player):
 
         self.brain = Brain(self)
 
+
     def update(self):
         """ 90 down, 0 left, 270 up, 180 right """
+        self.logger.debug("Entering Agent {}'s Update".format(self.name))
         for agent in self.controller.agents:
             if agent.name == self.name:
                 continue
             else:
-                self.brain.angle_decision(agent)
+                if self.mode == "attack":
+                    ranker = self.brain.attack_ranker
+                    lookahead = 2
+                elif self.mode == "run":
+                    ranker = self.brain.run_ranker
+                    lookahead = 10
+                self.brain.run_search(agent, ranker, lookahead=lookahead)
+                #self.brain.turn_towards(agent)
 
 
+        self.weapon1(None)
         super(Robot, self).update()
 
-
+    """
+        if len(self.behaviors) > 0:
+            behavior_func = self.behaviors[-1]
+            print('executed')
+            if behavior_func():
+                self.behaviors.pop()
+        else:
+            for agent in self.controller.agents:
+                if agent.name == self.name:
+                    continue
+                if isinstance(agent, Robot):
+                    continue
+                print('adding')
+                self.behaviors.append(self.face_agent(agent))
+            print('new turn')
+    """
